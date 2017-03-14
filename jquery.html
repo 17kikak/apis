@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina|Open+Sans" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <style>
+      body {
+        background-color: #f9fedc;
+        font-family: 'Open Sans', sans-serif;
+      }
+      h3 {
+        font-family: 'Baloo Bhaina', sans-serif;
+      }
+      div{
+        border-radius: 10px;
+        text-align: center;
+        margin: auto;
+        background-color: white;
+        border-color: grey;
+        border-width: 2px;
+        padding: 10px;
+        width: 25%;
+        font-style: serif;
+        box-shadow: 0px 2px 2px lightgrey;
+      }
+    </style>
+    <script>
+      $("signup").click(() => {
+        let email = $("#email").val();
+        let password = $("#password").val();
+        });
+      $("login").click(() => {
+        let newemail = $("#newemail").val();
+        let newpassword = $("#newpassword").val();
+        if (newemail = email && newpassword = password) {
+            alert("You logged in successfully!");
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="signup">
+      <h3>Sign Up</h3>
+      <p>email:</p>
+      <input type="email" id="email"/>
+      <p>password:</p>
+      <input type="password" id="password"/>
+      <br><br>
+      <button id="signup">Sign Up</button>
+    </div>
+    <br><br>
+    <div id="login">
+      <h3>Log In</h3>
+      <p>email:</p>
+      <input type="email" id="newemail"/>
+      <p>password:</p>
+      <input type="password" id="newpassword"/>
+      <br><br>
+      <button id="login">Log In</button>
+    </div>
+  </body>
+<html>
