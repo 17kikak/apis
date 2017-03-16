@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <input type="text" id="name"></input>
+    <button id="generate">Generate Student!</button>
+    <p id="display1"></p>
+    <p id="display2"></p>
+    <p id="display3"></p>
+    <p id="display4"></p>
+    <p id="display5"></p>
+    <p id="display6"></p>
+    <p id="display8"></p>
+    <p id="display9"></p>
+    <p id="display10"></p>
+    <p id="topGrades"></p>
+    <p id="oldest"></p>
+    <script>
+    let moreThan = [];
+    let olderThan = [];
+    let x = 0;
+    let students = [];
+    let newStudent = {
+      name: [],
+      scores: [],
+      average: [],
+      age: []
+    }
+    let addName = () => {
+      let name = $('#name').val();
+      newStudent.name[x] = name;
+    }
+    let scoreGenerate = () => {
+      for(let i = 0; i < 10; i++) {
+        let randomScore = Math.random() * (100 - 50 + 1) + 50;
+        randomScore = Math.ceil(randomScore * 100) / 100;
+        newStudent.scores.push([]);
+        newStudent.scores[x].push(randomScore);
+      }
+    }
+    let average = () => {
+      let sum = 0;
+      for (let i = 0; i < newStudent.scores[x].length; i++) {
+        sum += newStudent.scores[x][i];
+      }
+      let avg = sum/newStudent.scores[x].length;
+      avg = Math.ceil(avg * 100) / 100;
+      newStudent.average.push([]);
+      newStudent.average[x].push(avg);
+      if (avg > 80) {
+        moreThan.push(avg);
+      }
+    }
+    let randomAge = () => {
+      let randAge = Math.floor(Math.random() * (18 - 10 + 1)) + 10;
+      newStudent.age.push([]);
+      newStudent.age[x].push(randAge);
+      if (randAge > 15) {
+        olderThan.push(randAge);
+      }
+    }
+    $('#generate').click(()=> {
+      addName();
+      scoreGenerate();
+      average();
+      randomAge();
+      $("#display1").text("The student is: " + newStudent.name[0] + ", aged " + newStudent.age[0] + ", with test scores of: " + newStudent.scores[0] + " and an average of " + newStudent.average[0] + ".");
+      $("#display2").text("The student is: " + newStudent.name[1] + ", aged " + newStudent.age[1] + ", with test scores of: " + newStudent.scores[1] + " and an average of " + newStudent.average[1] + ".");
+      $("#display3").text("The student is: " + newStudent.name[2] + ", aged " + newStudent.age[2] + ", with test scores of: " + newStudent.scores[2] + " and an average of " + newStudent.average[2] + ".");
+      $("#display4").text("The student is: " + newStudent.name[3] + ", aged " + newStudent.age[3] + ", with test scores of: " + newStudent.scores[3] + " and an average of " + newStudent.average[3] + ".");
+      $("#display5").text("The student is: " + newStudent.name[4] + ", aged " + newStudent.age[4] + ", with test scores of: " + newStudent.scores[4] + " and an average of " + newStudent.average[4] + ".");
+      $("#display6").text("The student is: " + newStudent.name[5] + ", aged " + newStudent.age[5] + ", with test scores of: " + newStudent.scores[5] + " and an average of " + newStudent.average[5] + ".");
+      $("#display7").text("The student is: " + newStudent.name[6] + ", aged " + newStudent.age[6] + ", with test scores of: " + newStudent.scores[6] + " and an average of " + newStudent.average[6] + ".");
+      $("#display8").text("The student is: " + newStudent.name[7] + ", aged " + newStudent.age[7] + ", with test scores of: " + newStudent.scores[7] + " and an average of " + newStudent.average[7] + ".");
+      $("#display9").text("The student is: " + newStudent.name[8] + ", aged " + newStudent.age[8] + ", with test scores of: " + newStudent.scores[8] + " and an average of " + newStudent.average[8] + ".");
+      $("#display10").text("The student is: " + newStudent.name[9] + ", aged " + newStudent.age[9] + ", with test scores of: " + newStudent.scores[9] + " and an average of " + newStudent.average[9] + ".");
+      $("#topGrades").text("The top grades in this class are: " + moreThan);
+      $("#oldest").text("The oldest kids in this class are: " + olderThan);
+      x++;
+    })
+    </script>
+  </body>
+</html>
