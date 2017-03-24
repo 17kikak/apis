@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <table>
+      <caption>Student:   Age:</caption>
+      <tr>
+        <th>Homeworks:</th>
+        <td id="hw"></td>
+        <th>Exams:</th>
+        <td id="exams"></td>
+      </tr>
+      <tr>
+        <th>Average Grade:</th>
+        <td id="average"></td>
+        <th>GPA:</th>
+        <td id="grade"></td>
+      </tr>
+    </table>
+    <script>
+    $.get("https://randomuser.me/api/",
+      (response) => {
+        JSON.stringify(response);
+        console.log(response);
+        let first = response.results[0].name.first;
+        let last = response.results[0].name.last;
+        let age = Math.floor((Math.random() * 100) + 1);
+        $("caption").text("Student: " + first + " " + last + " Age: " + age);
+        let homeworks = [(Math.floor(Math.random() * (100 - 50 + 1) + 50)), (Math.floor(Math.random() * (100 - 50 + 1) + 50)), (Math.floor(Math.random() * (100 - 50 + 1) + 50))];
+        let average = () => {
+          let sum1 = 0;
+          for(let i = 0; i < homeworks.length; i++){
+            sum1 += homeworks[i];
+          }
+          let hwAvg = sum1/homeworks.length;
+          let sum2 = 0;
+          for(let i = 0; i < exams.length; i++){
+            sum2 += exams[i];
+          }
+          let examAvg = sum2/exams.length;
+          let sum3 = (examAvg * 2) + hwAvg;
+          let avg = Math.ceil(sum3/3 * 100) / 100;
+          $("#average").text(avg);
+          if(avg < 60) {
+            let gpa = "0.0 (F)";
+            $("#grade").text(gpa);
+          } else if (avg < 70) {
+            let gpa = "1.0 (D)";
+            $("#grade").text(gpa);
+          } else if (avg < 80) {
+            let gpa = "2.0 (C)";
+            $("#grade").text(gpa);
+          } else if (avg < 90) {
+            let gpa = "3.0 (B)";
+            $("#grade").text(gpa);
+          } else {
+            let gpa = "4.0 (A)";
+            $("#grade").text(gpa);
+          }
+        }
+        let exams = [(Math.floor(Math.random() * (100 - 50 + 1) + 50)), (Math.floor(Math.random() * (100 - 50 + 1) + 50))];
+        $("#hw").text(homeworks);
+        $("#exams").text(exams);
+        average();
+      });
+    </script>
+  </body>
+</html>
