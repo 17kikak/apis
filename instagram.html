@@ -25,7 +25,6 @@
     <script>
     let url = "https://randomuser.me/api/";
     $.get(url, (response)=> {
-      //document.write(JSON.stringify(profilePic));
       console.log(response);
       let x = response.results[0];
       $("body").append(`<img src=${x.picture.large} id="profilePic"> </img>
@@ -34,12 +33,6 @@
         <h3>${x.location.city}, ${x.location.state}</h3>
         `)
     });
-    /*$.get(url2, (response2)=> {
-      console.log(response2);
-      for(let i = 0; i < 2; i++){
-        $("body").append(`<a href="www.unsplash.it"><img src=${response2}></img></a>`);
-      }
-    })*/
     setTimeout(() => {
       for(let x = 0; x < 100; x++){
         $("body").append(`<a href="https://unsplash.it/">
