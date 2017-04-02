@@ -15,7 +15,7 @@
     //computer's original 2 cards
       $.get("https://deckofcardsapi.com/api/deck/new/draw/?count=4", (response) => {
         let deckId = response.deck_id;
-        let doneComp;
+        let doneComp = false;
         let computerCards = [];
         let card1 = response.cards[0];
         computerCards.push(card1);
@@ -44,13 +44,14 @@
         var plus = card1num + card2num;
         console.log(plus);
         if (plus === 21) {
-          alert("You Lose!");
+          alert("You Lose! The computer has 21.");
         } if (plus > 21) {
           alert("You Win!")
         }
 
         compRes = () => {
           if (plus < 15){
+            console.log(doneUser);
           // computer hits
             $.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`, (response3) => {
               let card6num = response3.cards[0].value;
@@ -64,28 +65,49 @@
               console.log(card6num);
               plus += card6num;
               console.log(plus);
-              if (doneUser = false) {
+              console.log(doneUser);
+              if (plus === 21) {
+                alert("Game Over!");
+                alert("You Lose!");
+              } else if (plus > 21) {
+                alert("Game Over!");
+                alert("You Win! The computer got over 21.")
+              } else {
+                compRes();
+              }
+              if (doneUser === false) {
                 alert("The computer hit. Play your next turn.");
+                userRes();
               } else {
                   alert("The computer hit.");
-                  alert("Game Over!");
                   if(sum > plus) {
-                    alert("You Win!");
+                    if (sum === 21) {
+                      alert("You have 21.");
+                    } else if (sum > 21) {
+                      alert("You Lose! You have more than 21.")
+                    } else {
+                      compRes();
+                    }
                   } else {
-                    alert("You Lose!");
+                    if (plus === 21) {
+                      alert("You Lose!");
+                    } else if (plus > 21) {
+                      alert("You Win! The computer got over 21.")
+                    } else {
+                      compRes();
+                    }
                   }
-              }
-              if (plus === 21) {
-                alert("You Lose!");
-              } if (plus > 21) {
-                alert("You Win!")
               }
             })
           } else {
             //computer stays
-            if (doneUser = false) {
+            console.log(doneUser);
+            if (doneUser === false) {
+              console.log(doneUser);
               alert("The computer is staying. Play your next turn.");
-            } else if (doneUser = true) {
+              userRes();
+            } else {
+              console.log(doneUser);
               alert("The computer is staying.");
               alert("Game Over!");
               if(sum > plus) {
@@ -100,7 +122,8 @@
         console.log(computerCards);
 
         // user's original 2 cards
-        let doneUser;
+        let doneUser = false;
+        console.log(doneUser);
         let showCard3 = response.cards[2].image;
         $("body").append(`<img src="${showCard3}"/>`);
         let showCard4 = response.cards[3].image;
@@ -125,9 +148,9 @@
         let sum = card3num + card4num;
         console.log(sum);
         if (sum === 21) {
-          alert("You Win!");
+          alert("You have 21.");
         } else if (sum > 21) {
-          alert("You Lose!")
+          alert("You Lose! You have more than 21.")
         }
         console.log(card3num);
         console.log(card4num);
@@ -150,9 +173,13 @@
               sum += card5num;
               console.log(sum);
               if (sum === 21) {
-                alert("You Win!");
+                alert("You have 21.");
+                compRes();
               } if (sum > 21) {
-                alert("You Lose!")
+                alert("You Lose! You have more than 21.")
+              } else {
+                console.log(doneUser);
+                compRes(); //might have to remove
               }
             })
           })
