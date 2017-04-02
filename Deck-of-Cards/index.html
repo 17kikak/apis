@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+      button {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="hit">Hit</button>
+    <button id="stay">Stay</button>
+    <script>
+    //computer's original 2 cards
+      $.get("https://deckofcardsapi.com/api/deck/new/draw/?count=4", (response) => {
+        let deckId = response.deck_id;
+        let doneComp = false;
+        let computerCards = [];
+        let card1 = response.cards[0];
+        computerCards.push(card1);
+        let card2 = response.cards[1];
+        computerCards.push(card2);
+        if(response.cards[0].value === "ACE") {
+          var card1num = 11;
+          console.log(card1num);
+        } else if (response.cards[0].value === "JACK"|| response.cards[0].value === "QUEEN"|| response.cards[0].value === "KING"){
+          var card1num = 10
+          console.log(card1num);
+        } else {
+          var card1num = parseInt(response.cards[0].value);
+          console.log(card1num);
+        }
+        if(response.cards[1].value === "ACE") {
+          var card2num = 11;
+          console.log(card2num);
+        } else if (response.cards[1].value === "JACK"|| response.cards[1].value === "QUEEN"|| response.cards[1].value === "KING"){
+          var card2num = 10
+          console.log(card2num);
+        } else {
+          var card2num = parseInt(response.cards[1].value);
+          console.log(card2num);
+        }
+        var plus = card1num + card2num;
+        console.log(plus);
+
+        compRes = () => {
+          if (plus === 21) {
+            alert("You Lose!");
+          } if (plus > 21) {
+            alert("You Win!")
+          }
+          if (plus < 15){
+          // computer hits
+            $.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`, (response3) => {
+              let card6num = response3.cards[0].value;
+              if (card6num === "ACE"){
+                card6num = 11;
+              } else if (card6num === "JACK"|| card6num === "QUEEN"|| card6num === "KING") {
+                card6num = 10;
+              } else {
+                card6num = parseInt(card6num);
+              }
+              console.log(card6num);
+              plus += card6num;
+              console.log(plus);
+              if (plus === 21) {
+                alert("You Lose!");
+              } if (plus > 21) {
+                alert("You Win!")
+              }
+              if (doneUser = false) {
+                alert("The computer hit. Play your next turn.");
+              } else if (doneUser = true){
+                compRes();
+              }
+            })
+          } else {
+            //computer stays
+            if (doneUser = false) {
+              alert("The computer is staying. Play your next turn.");
+            } else if (doneUser = true) {
+              alert("Game Over!");
+              if(sum > plus) {
+                alert("You Win!");
+              } else {
+                alert("You Lose!");
+              }
+            }
+            doneComp = true;
+          }
+        }
+        console.log(computerCards);
+
+        // user's original 2 cards
+        let doneUser = false;
+        let showCard3 = response.cards[2].image;
+        $("body").append(`<img src="${showCard3}"/>`);
+        let showCard4 = response.cards[3].image;
+        $("body").append(`<img src="${showCard4}"/>`);
+        console.log(response);
+        let card3num = response.cards[2].value;
+        let card4num = response.cards[3].value;
+        if (card3num === "ACE"){
+          card3num = 11;
+        } else if (card3num === "JACK"|| card3num === "QUEEN"|| card3num === "KING") {
+          card3num = 10;
+        } else {
+          card3num = parseInt(card3num);
+        }
+        if (card4num === "ACE"){
+          card4num = 11;
+        } else if (card4num === "JACK"|| card4num ==="QUEEN"|| card4num === "KING") {
+          card4num = 10;
+        } else {
+          card4num = parseInt(card4num);
+        }
+        let sum = card3num + card4num;
+        console.log(sum);
+        if (sum === 21) {
+          alert("You Win!");
+        } else if (sum > 21) {
+          alert("You Lose!")
+        }
+        console.log(card3num);
+        console.log(card4num);
+
+        userRes = () => {
+          // user hits
+          $("#hit").click(() => {
+            $.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`, (response2) => {
+              let showCard5 = response2.cards[0].image;
+              $("body").append(`<img src="${showCard5}"/>`);
+              let card5num = response2.cards[0].value;
+              if (card5num === "ACE"){
+                card5num = 11;
+              } else if (card5num === "JACK"|| card5num === "QUEEN"|| card5num === "KING") {
+                card5num = 10;
+              } else {
+                card5num = parseInt(card5num);
+              }
+              console.log(card5num);
+              sum += card5num;
+              console.log(sum);
+              if (sum === 21) {
+                alert("You Win!");
+              } if (sum > 21) {
+                alert("You Lose!")
+              }
+            })
+            compRes();
+          })
+          $("#stay").click(() => {
+            // user stays
+            doneUser = true;
+            if(doneComp === true && doneUser === true) {
+              alert("Game Over!");
+              if(sum > plus) {
+                alert("You Win!");
+              } else {
+                alert("You Lose!")
+              }
+            }
+            compRes();
+          })
+        }
+
+
+        userRes();
+      })
+    </script>
+  </body>
+</html>
