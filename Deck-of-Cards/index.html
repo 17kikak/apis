@@ -15,7 +15,7 @@
     //computer's original 2 cards
       $.get("https://deckofcardsapi.com/api/deck/new/draw/?count=4", (response) => {
         let deckId = response.deck_id;
-        let doneComp = false;
+        let doneComp;
         let computerCards = [];
         let card1 = response.cards[0];
         computerCards.push(card1);
@@ -43,13 +43,13 @@
         }
         var plus = card1num + card2num;
         console.log(plus);
+        if (plus === 21) {
+          alert("You Lose!");
+        } if (plus > 21) {
+          alert("You Win!")
+        }
 
         compRes = () => {
-          if (plus === 21) {
-            alert("You Lose!");
-          } if (plus > 21) {
-            alert("You Win!")
-          }
           if (plus < 15){
           // computer hits
             $.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`, (response3) => {
@@ -64,15 +64,21 @@
               console.log(card6num);
               plus += card6num;
               console.log(plus);
+              if (doneUser = false) {
+                alert("The computer hit. Play your next turn.");
+              } else {
+                  alert("The computer hit.");
+                  alert("Game Over!");
+                  if(sum > plus) {
+                    alert("You Win!");
+                  } else {
+                    alert("You Lose!");
+                  }
+              }
               if (plus === 21) {
                 alert("You Lose!");
               } if (plus > 21) {
                 alert("You Win!")
-              }
-              if (doneUser = false) {
-                alert("The computer hit. Play your next turn.");
-              } else if (doneUser = true){
-                compRes();
               }
             })
           } else {
@@ -80,6 +86,7 @@
             if (doneUser = false) {
               alert("The computer is staying. Play your next turn.");
             } else if (doneUser = true) {
+              alert("The computer is staying.");
               alert("Game Over!");
               if(sum > plus) {
                 alert("You Win!");
@@ -93,7 +100,7 @@
         console.log(computerCards);
 
         // user's original 2 cards
-        let doneUser = false;
+        let doneUser;
         let showCard3 = response.cards[2].image;
         $("body").append(`<img src="${showCard3}"/>`);
         let showCard4 = response.cards[3].image;
@@ -148,7 +155,6 @@
                 alert("You Lose!")
               }
             })
-            compRes();
           })
           $("#stay").click(() => {
             // user stays
@@ -160,8 +166,9 @@
               } else {
                 alert("You Lose!")
               }
+            } else {
+              compRes();
             }
-            compRes();
           })
         }
 
