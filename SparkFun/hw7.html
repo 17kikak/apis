@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Mukta+Vaani" rel="stylesheet">
+    <style>
+    </style>
+  </head>
+  <body>
+    <style>
+      table, th, td {
+        margin: auto;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 15px;
+        text-align: left;
+        /*border-bottom: 1px solid #ddd;*/
+      }
+      th {
+        background-color: #bcb6fc;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2
+      }
+      h2 {
+        text-align: center;
+        font-family: 'Mukta Vaani', sans-serif;
+      }
+      #formDiv {
+        width: 50%;
+        margin: auto;
+        border-bottom: 2px dashed grey;
+      }
+      #userform {
+        width: 100%;
+      }
+      input {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+      }
+    </style>
+    <h2>my user form:</h2>
+    <div id="formDiv">
+      <form id="userform">
+        First name:<br>
+        <input type="text" id="firstname"><br>
+        Last name:<br>
+        <input type="email" id="lastname"><br>
+        Email:<br>
+        <input type="text" id="email"><br>
+        Username:<br>
+        <input type="text" id="user"><br>
+        Password:<br>
+        <input type="password" id="pass"><br>
+        Age:<br>
+        <input type="text" id="age"><br>
+        Location:<br>
+        <input type="text" id="location"><br>
+        <input type="submit" id="submit" value="Ready?" style="display: block; background-color: #bcb6fc; border: none;">
+      </form>
+      <br>
+      <br>
+    </div>
+    <br>
+    <br>
+    <h2>recent responses to this form</h2>
+    <table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Age</th>
+        <th>Location</th>
+      </tr>
+    </table>
+    <script>
+      $.get("http://data.sparkfun.com/output/YDdJa6wOzvu2gZ2lG3rr.json", (response) => {
+        console.log(response);
+        for (let i = 0; i < response.length; i++){
+          $("table").append(`<tr><td>${response[i].firstname}</td><td>${response[i].lastname}</td><td>${response[i].email}</td><td>${response[i].username}</td><td>${response[i].password}</td><td>${response[i].age}</td><td>${response[i].location}</td></tr>`);
+        }
+      })
+      $('#submit').click(() => {
+        event.preventDefault();
+        let firstName = $('#firstname').val();
+        console.log(firstName);
+        let lastName = $('#lastname').val();
+        console.log(lastName);
+        let email = $('#email').val();
+        console.log(email);
+        let username = $('#user').val();
+        console.log(username);
+        let password = $('#pass').val();
+        console.log(password);
+        let age = $('#age').val();
+        console.log(age);
+        let location = $('#location').val();
+        console.log(location);
+        $.ajax({
+            url: "http://data.sparkfun.com/input/YDdJa6wOzvu2gZ2lG3rr",
+            headers: {
+              'Phant-Private-Key': 'RnBr5X40g8CmelmwJBDD'
+            },
+            method: "POST",
+            dataType: 'json',
+            data: {firstname: firstName, lastname: lastName, email: email, username: username, password: password, age: age, location: location},
+            success: () => {
+              console.log("success");
+            }
+        });
+      })
+
+
+    </script>
+  </body>
+</html>
